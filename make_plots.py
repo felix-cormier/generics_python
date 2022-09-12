@@ -21,13 +21,15 @@ def generic_histogram(x, x_name, output_path, output_name, y_name = None, label=
         plt.close()
         plt.clf()
 
-def generic_2D_plot(x,y,x_range, x_bins, x_name, y_range, y_bins, y_name, label, output_path, output_name, normalization=False, weights=None, xLog=False, yLog=False, save_plot=True, return_hist=False):
+def generic_2D_plot(x,y,x_range, x_bins, x_name, y_range, y_bins, y_name, label, output_path, output_name, title = None, normalization=False, weights=None, xLog=False, yLog=False, save_plot=True, return_hist=False):
 
     fig, ax = plt.subplots()
     hh, xedges, yedges, _ = ax.hist2d(x,y, [x_bins, y_bins], [x_range,y_range], density=normalization, weights=weights , label=label)
     fig.colorbar(_, ax=ax)
     ax.set_xlabel(x_name)
     ax.set_ylabel(y_name)
+    if title is not None:
+        plt.title = title
     plt.legend()
     if xLog:
         plt.xscale('log', nonposx='clip')
@@ -36,8 +38,6 @@ def generic_2D_plot(x,y,x_range, x_bins, x_name, y_range, y_bins, y_name, label,
     if save_plot:
         plt.savefig(output_path+'/'+output_name+'.png', format='png', transparent=False)
 
-    plt.close()
-    plt.clf()
 
     if return_hist:
         return hh, xedges, yedges
