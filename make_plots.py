@@ -11,7 +11,8 @@ def generic_2D_plot(x,y,x_range, x_bins, x_name, y_range, y_bins, y_name, label,
     ax.set_ylabel(y_name)
     if title is not None:
         plt.title = title
-    plt.legend()
+    if label is not None:
+        plt.legend()
     if xLog:
         plt.xscale('log', nonposx='clip')
     if yLog:
