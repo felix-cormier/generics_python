@@ -6,6 +6,19 @@ import numpy as np
 
 ###To make plots
 
+def multi_scatter_with_fit(x, sequences, labels, output_path, extra_string, xlabel, ylabel):
+    for sequence, label in zip(sequences,labels):
+        plt.scatter(x,sequence, label = label)
+        plt.plot(x, np.poly1d(np.polyfit(x, sequence, 1))(x))
+
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.legend()
+    plt.savefig(output_path+'/'+extra_string+'.png', format='png', transparent=False)
+    plt.close()
+    plt.clf()
+
+
 def generic_histogram(x, x_name, output_path, output_name, y_name = None, label=None, range=None, bins=None, in_chain=False):
     fig, ax = plt.subplots()
     alpha=1
