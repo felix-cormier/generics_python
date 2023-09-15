@@ -6,18 +6,20 @@ import numpy as np
 
 ###To make plots
 
-def generic_histogram(x, x_name, output_path, output_name, y_name = None, label=None, range=None, bins=None, in_chain=False):
+def generic_histogram(x, x_name, output_path, output_name, y_name = None, label=None, range=None, bins=None, in_chain=False, doNorm=False):
     fig, ax = plt.subplots()
     alpha=1
     if len(x) > 1:
         alpha=0.6
-    ax.hist(x, bins=bins, range=range, label=label, alpha=alpha, histtype='stepfilled')
+    ax.hist(x, bins=bins, range=range, label=label, alpha=alpha, histtype='stepfilled', density=doNorm)
     ax.set_xlabel(x_name)
-    if y_name is not None:
+    if y_name is not None and  not doNorm:
         ax.set_ylabel(y_name)
+    elif doNorm:
+        ax.set_ylabel("Arbitrary")
     ax.legend(loc='best')
     if not in_chain:
-        plt.savefig(output_path+'/'+output_name+'.png', format='png', transparent=False)
+        plt.savefig(output_path+'/'+output_name+'.png', format='png', transparent=False, bbox_inches="tight")
         plt.close()
         plt.clf()
 
@@ -53,3 +55,4 @@ def generic_3D_plot(x,y,z,strength, x_label, y_label, z_label, strength_label, o
     cbar = fig.colorbar(p, ax=ax)
     cbar.set_label(strength_label)
     plt.savefig(output_path+'/'+output_name+'.png', format='png', transparent=False)
+    plt.clf()
